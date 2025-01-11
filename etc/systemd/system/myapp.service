@@ -1,0 +1,13 @@
+[Unit]
+Description=Gunicorn instance to serve Flask application Myapp
+After=network.target
+
+[Service]
+User=root
+Group=www-data
+WorkingDirectory=/var/www/myapp
+# Add option -k uvicorn.workers.UvicornWorker if you use ASGI (e.g., FastAPI or FastHTML)
+ExecStart=/var/www/myapp/.venv/bin/gunicorn --workers 3 --bind unix:myapp.sock -m 007 main:app
+
+[Install]
+WantedBy=multi-user.target
